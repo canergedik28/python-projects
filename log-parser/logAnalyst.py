@@ -6,16 +6,16 @@ class AuthLogAnalyst:
     def __init__(self) -> None:
        pass
 
-    def readLogfile(self,logFile="auth.log"):
-        with open(logFile,'r') as file:
+    def read_log_file(self,log_file="test.log"):
+        with open(log_file,'r') as file:
             files = file.read()
         return files
     
 
-    def getLogAuthAnalyst(self):
+    def get_log_auth_analyst(self):
         count = 1
-        logFile = self.readLogfile()
-        data = re.findall(r'Failed password for invalid user (.*?) from (.*?) ',logFile)
+        log_file = self.read_log_file()
+        data = re.findall(r'Failed password for invalid user (.*?) from (.*?) ',log_file)
         grouped_data = defaultdict(list)
         for username, ip in data:
             grouped_data[ip].append(username)
@@ -25,4 +25,4 @@ class AuthLogAnalyst:
 
 if(__name__ == "__main__"):
     authLogAnalyst = AuthLogAnalyst()
-    authLogAnalyst.getLogAuthAnalyst()
+    authLogAnalyst.get_log_auth_analyst()
