@@ -1,0 +1,1 @@
+ auth.log dosyasını okuyup IP adresi ve kullanıcı adına göre gelen saldırı (başarısız giriş) denemelerini filtreleyen çok basit bir python scripti
