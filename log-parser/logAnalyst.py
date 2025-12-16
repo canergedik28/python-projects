@@ -8,11 +8,11 @@ class AuthLogAnalyst:
 
     def read_log_file(self,log_file="test.log"):
         with open(log_file,'r') as file:
-            files = file.read()
-        return files
+            file = file.read()
+        return file
     
 
-    def get_log_auth_analyst(self):
+    def get_auth_log_analyst(self):
         count = 1
         log_file = self.read_log_file()
         data = re.findall(r'Failed password for invalid user (.*?) from (.*?) ',log_file)
@@ -25,4 +25,4 @@ class AuthLogAnalyst:
 
 if(__name__ == "__main__"):
     authLogAnalyst = AuthLogAnalyst()
-    authLogAnalyst.get_log_auth_analyst()
+    authLogAnalyst.get_auth_log_analyst()
