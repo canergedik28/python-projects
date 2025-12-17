@@ -1,9 +1,9 @@
 import re
 from collections import defaultdict
+from pprint import pprint
 
 
 class AuthLogAnalyst: 
-    
     user_attack = {}
     
     def __init__(self) -> None:
@@ -49,7 +49,10 @@ if(__name__ == "__main__"):
             data = authLogAnalyst.get_auth_log_analyst()
             for ip, usernames in data:
               print(f"{count} - IP: {ip} -> Users: {', '.join(usernames)} ->  attack_count: {len(usernames)}" + "\n\n\n")
+              user_attack_count = authLogAnalyst.get_attack_user_count([username for username in usernames ])
               count +=1
+            pprint(user_attack_count,indent=10)
+            authLogAnalyst.user_attack.clear()
           elif choice == 2:
             limit = int(input("Bir limit giriniz: "))
             data = authLogAnalyst.get_sliced_list(limit=limit)
@@ -70,9 +73,8 @@ if(__name__ == "__main__"):
                print(f"{count} - IP: {ip} -> Users: {', '.join([search for search in usernames if search.startswith(text) ])} ->  attack_count: {len([search for search in usernames if search.startswith(text) ])}" + "\n\n\n")
                user_attack_count = authLogAnalyst.get_attack_user_count([search for search in usernames if search.startswith(text) ])
                count+=1
-            print(user_attack_count)
+            pprint(user_attack_count,indent=10)
             authLogAnalyst.user_attack.clear()
-
           else:
             control = 5
       except:
