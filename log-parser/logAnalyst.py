@@ -4,6 +4,8 @@ from collections import defaultdict
 
 class AuthLogAnalyst: 
     
+    user_attack = {}
+    
     def __init__(self) -> None:
        pass
     
@@ -27,6 +29,15 @@ class AuthLogAnalyst:
     def get_reversed_list_slice(self,limit=-20):
         data =  list(self.get_auth_log_analyst())[limit:][::-1]
         return data
+    
+    def get_attack_user_count(self,data = []):
+        
+        for user in data:
+            if(user in self.user_attack):
+               self.user_attack[user] +=1
+            else:
+              self.user_attack[user] = 1
+        return self.user_attack
 
 if(__name__ == "__main__"):
     authLogAnalyst = AuthLogAnalyst()
@@ -34,7 +45,7 @@ if(__name__ == "__main__"):
     while (control == 1  or control == 3) or control == 4:
       try: 
           count = 1
-          choice = int(input("Bir secim yapiniz:"))
+          choice = int(input("Bir secim islemi yapiniz:"))
           if choice == 1:
             data = authLogAnalyst.get_auth_log_analyst()
             for ip, usernames in data:
@@ -58,7 +69,11 @@ if(__name__ == "__main__"):
             data = authLogAnalyst.get_sliced_list(limit=limit)
             for ip, usernames in data:
                print(f"{count} - IP: {ip} -> Users: {', '.join([search for search in usernames if search.startswith(text) ])} ->  attack_count: {len([search for search in usernames if search.startswith(text) ])}" + "\n\n\n")
+               user_attack_count = authLogAnalyst.get_attack_user_count([search for search in usernames if search.startswith(text) ])
                count+=1
+            print(user_attack_count)
+            authLogAnalyst.user_attack.clear()
+
           else:
             control = 5
       except:
