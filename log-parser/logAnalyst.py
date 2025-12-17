@@ -31,7 +31,6 @@ class AuthLogAnalyst:
         return data
     
     def get_attack_user_count(self,data = []):
-        
         for user in data:
             if(user in self.user_attack):
                self.user_attack[user] +=1
