@@ -34,7 +34,7 @@ if(__name__ == "__main__"):
     while (control == 1  or control == 3) or control == 4:
       try: 
           count = 1
-          choice = int(input("Bir secim islemi yapiniz:"))
+          choice = int(input("Bir secim yapiniz:"))
           if choice == 1:
             data = authLogAnalyst.get_auth_log_analyst()
             for ip, usernames in data:
