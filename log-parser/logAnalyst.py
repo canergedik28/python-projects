@@ -49,7 +49,7 @@ if(__name__ == "__main__"):
             data = authLogAnalyst.get_auth_log_analyst()
             for ip, usernames in data:
               print(f"{count} - IP: {ip} -> Users: {', '.join(usernames)} ->  attack_count: {len(usernames)}" + "\n\n\n")
-              authLogAnalyst.get_attack_user_count([username for username in usernames ])
+              authLogAnalyst.get_attack_user_count(usernames)
               count +=1
             pprint(authLogAnalyst.user_attack,indent=10)
             authLogAnalyst.user_attack.clear()
