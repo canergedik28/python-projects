@@ -1,11 +1,10 @@
 import re
-from collections import defaultdict
+from collections import defaultdict,Counter
 from pprint import pprint
 
 
 class AuthLogAnalyst: 
     user_attack = {}
-    
     def __init__(self) -> None:
        pass
     
@@ -37,21 +36,25 @@ class AuthLogAnalyst:
             else:
               self.user_attack[user] = 1
         return self.user_attack
-
+    def get_sorted_user_attack_count(self):
+        return sorted(self.user_attack.items(), key=lambda x: x[1], reverse=True)
+    
+    
 if(__name__ == "__main__"):
     authLogAnalyst = AuthLogAnalyst()
     control = 1
     while (control == 1  or control == 3) or control == 4:
       try: 
           count = 1
-          choice = int(input("Bir islem seciniz: "))
+          choice = int(input("Bir islem seciniz:"))
           if choice == 1:
             data = authLogAnalyst.get_auth_log_analyst()
             for ip, usernames in data:
               print(f"{count} - IP: {ip} -> Users: {', '.join(usernames)} ->  attack_count: {len(usernames)}" + "\n\n\n")
               authLogAnalyst.get_attack_user_count(usernames)
               count +=1
-            pprint(authLogAnalyst.user_attack,indent=10)
+            pprint(authLogAnalyst.user_attack,indent=5)
+            pprint(authLogAnalyst.get_sorted_user_attack_count()[:5],indent=5)
             authLogAnalyst.user_attack.clear()
           elif choice == 2:
             limit = int(input("Bir limit giriniz: "))
@@ -69,11 +72,12 @@ if(__name__ == "__main__"):
             text = str(input("Bir text giriniz: "))
             limit = int(input("Bir limit giriniz: "))
             data = authLogAnalyst.get_sliced_list(limit=limit)
-            for ip, usernames in data:
-               print(f"{count} - IP: {ip} -> Users: {', '.join([search for search in usernames if search.startswith(text) ])} ->  attack_count: {len([search for search in usernames if search.startswith(text) ])}" + "\n\n\n")
-               authLogAnalyst.get_attack_user_count([search for search in usernames if search.startswith(text) ])
-               count+=1
-            pprint(authLogAnalyst.user_attack,indent=10)
+            for ip, usernames in data: 
+                  print(f"{count} - IP: {ip} -> Users: {', '.join([search for search in usernames if search.startswith(text) ])} ->  attack_count: {len([search for search in usernames if search.startswith(text) ])}" + "\n\n\n")
+                  authLogAnalyst.get_attack_user_count([search for search in usernames if search.startswith(text) ])
+                  count+=1
+            pprint(authLogAnalyst.user_attack,indent=5)
+            pprint(authLogAnalyst.get_sorted_user_attack_count()[:5],indent=5)
             authLogAnalyst.user_attack.clear()
           else:
             control = 5
