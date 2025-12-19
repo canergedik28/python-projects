@@ -36,8 +36,8 @@ class AuthLogAnalyst:
             else:
               self.user_attack[user] = 1
         return self.user_attack
-    def get_sorted_user_attack_count(self,limit=5):
-        return sorted(self.user_attack.items(), key=lambda x: x[1], reverse=True)[:limit]
+    def get_sorted_user_attack_count(self,limit=2,reverse=True):
+        return sorted(self.user_attack.items(), key=lambda x: x[1], reverse=reverse)[:limit]
     
     
 if(__name__ == "__main__"):
@@ -54,7 +54,9 @@ if(__name__ == "__main__"):
               authLogAnalyst.get_attack_user_count(usernames)
               count +=1
             pprint(authLogAnalyst.user_attack,indent=5)
-            pprint(authLogAnalyst.get_sorted_user_attack_count(),indent=5)
+            pprint(authLogAnalyst.get_sorted_user_attack_count(limit=4,reverse=False),indent=5)
+            pprint(authLogAnalyst.get_sorted_user_attack_count(limit=4,reverse=True),indent=5)
+
             authLogAnalyst.user_attack.clear()
           elif choice == 2:
             limit = int(input("Bir limit giriniz: "))
@@ -76,8 +78,10 @@ if(__name__ == "__main__"):
                   print(f"{count} - IP: {ip} -> Users: {', '.join([search for search in usernames if search.startswith(text) ])} ->  attack_count: {len([search for search in usernames if search.startswith(text) ])}" + "\n\n\n")
                   authLogAnalyst.get_attack_user_count([search for search in usernames if search.startswith(text) ])
                   count+=1
+  
             pprint(authLogAnalyst.user_attack,indent=5)
-            pprint(authLogAnalyst.get_sorted_user_attack_count(),indent=5)
+            pprint(authLogAnalyst.get_sorted_user_attack_count(limit=4,reverse=False),indent=5)
+            pprint(authLogAnalyst.get_sorted_user_attack_count(limit=4,reverse=True),indent=5)
             authLogAnalyst.user_attack.clear()
           else:
             control = 5
