@@ -9,7 +9,7 @@ class AuthLogAnalyst:
     def __init__(self) -> None:
        pass
     
-    def read_log_file(self,file_path="auth2.log"):
+    def read_log_file(self,file_path="test.log"):
             with open(file_path,'r') as file:
                 file = file.read()
             return file
