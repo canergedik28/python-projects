@@ -39,9 +39,10 @@ class AuthLogAnalyst:
         return self.user_attack
     def get_sorted_user_attack_count(self,limit=2,reverse=True):
         return sorted(self.user_attack.items(), key=lambda x: x[1], reverse=reverse)[:limit]
-    
 
-if(__name__ == "__main__"):
+class Run:
+   @staticmethod
+   def main():
         authLogAnalyst = AuthLogAnalyst() 
         parent_parser = argparse.ArgumentParser(add_help=False)
         parent_parser.add_argument('--main')
@@ -89,4 +90,6 @@ if(__name__ == "__main__"):
             pprint(authLogAnalyst.get_sorted_user_attack_count(limit=4,reverse=True),indent=5)
             authLogAnalyst.user_attack.clear()
         
-            
+if(__name__ == "__main__"):
+    Run.main()
+       
