@@ -64,7 +64,7 @@ class Run:
             pprint(authLogAnalyst.get_sorted_user_attack_count(limit=4,reverse=True),indent=5)
             authLogAnalyst.user_attack.clear()
         if args.first_attack == "first_attack":
-            data = authLogAnalyst.get_sliced_list()[1]
+            data = authLogAnalyst.get_sliced_list()[0]
             pprint(data)
         if args.last_attack == "last_attack":
             data = authLogAnalyst.get_reversed_list_slice()[0]
