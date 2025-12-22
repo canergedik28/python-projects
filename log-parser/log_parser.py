@@ -67,7 +67,7 @@ class Run:
             data = authLogAnalyst.get_sliced_list()[1]
             pprint(data)
         if args.last_attack == "last_attack":
-            data = authLogAnalyst.get_reversed_list_slice()[1]
+            data = authLogAnalyst.get_reversed_list_slice()[0]
             pprint(data)
         if args.reversed_list_slice and (args.limit and args.limit) > 0:
             data = authLogAnalyst.get_reversed_list_slice(limit=-args.limit)
