@@ -69,7 +69,7 @@ class Run:
         if args.last_attack == "last_attack":
             data = authLogAnalyst.get_reversed_list_slice()[0]
             pprint(data)
-        if args.reversed_list_slice and (args.limit and args.limit) > 0:
+        if args.reversed_list_slice and (args.limit and args.limit > 0):
             data = authLogAnalyst.get_reversed_list_slice(limit=-args.limit)
             for ip, usernames in data:
                 print(f"{count} - IP: {ip} -> Users: {', '.join(usernames)} ->  attack_count: {len(usernames)}" + "\n\n\n")
