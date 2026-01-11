@@ -2,8 +2,6 @@ import re
 from collections import defaultdict
 from pprint import pprint
 import argparse
-
-
 class AuthLogAnalyst: 
     user_attack = {}
     def __init__(self) -> None:
@@ -14,9 +12,10 @@ class AuthLogAnalyst:
                 file = file.read()
             return file
     
-    def get_auth_log_analyst(self):
+    def get_auth_log_analyst(self,reverse=False):
         log_file = self.read_log_file()
         data = re.findall(r'Failed password for invalid user (.*?) from (.*?) ',log_file)
+        data = data[::-1] if reverse else data 
         grouped_data = defaultdict(list)
         for username, ip in data:
             grouped_data[ip].append(username)
@@ -26,20 +25,20 @@ class AuthLogAnalyst:
         data =  list(self.get_auth_log_analyst())[:limit]
         return data
     
-    def get_reversed_list_slice(self,limit=-20):
-        data =  list(self.get_auth_log_analyst())[limit:][::-1]
+    def get_reversed_list_slice(self,limit=20):
+        data =  list(self.get_auth_log_analyst(reverse=True))[:limit]
         return data
     
     def get_attack_user_count(self,data = []):
         for user in data:
-            if(user in self.user_attack):
+            if user in self.user_attack:
                self.user_attack[user] +=1
             else:
               self.user_attack[user] = 1
         return self.user_attack
     def get_sorted_user_attack_count(self,limit=2,reverse=True):
         return sorted(self.user_attack.items(), key=lambda x: x[1], reverse=reverse)[:limit]
-
+ 
 class Run:
    @staticmethod
    def main():
@@ -69,8 +68,8 @@ class Run:
         if args.last_attack == "last_attack":
             data = authLogAnalyst.get_reversed_list_slice()[0]
             pprint(data)
-        if args.reversed_list_slice and (args.limit and args.limit > 0):
-            data = authLogAnalyst.get_reversed_list_slice(limit=-args.limit)
+        if args.reversed_list_slice and (args.limit and args.limit) > 0:
+            data = authLogAnalyst.get_reversed_list_slice(limit=args.limit)
             for ip, usernames in data:
                 print(f"{count} - IP: {ip} -> Users: {', '.join(usernames)} ->  attack_count: {len(usernames)}" + "\n\n\n")
                 count+=1
