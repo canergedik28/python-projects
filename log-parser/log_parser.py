@@ -15,9 +15,8 @@ class AuthLogAnalyst:
     def get_auth_log_analyst(self,reverse=False):
         log_file = self.read_log_file()
         data = re.findall(r'Failed password for invalid user (.*?) from (.*?) ',log_file)
-        data = data[::-1] if reverse else data 
         grouped_data = defaultdict(list)
-        for username, ip in data:
+        for username, ip in data[::-1] if reverse else data:
             grouped_data[ip].append(username)
         return grouped_data.items()
     
